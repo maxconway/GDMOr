@@ -7,7 +7,7 @@ reproduce <- function(parents, pop){
 	# 
 	# Returns:
 	#  A list of lists of length pop, with inner lists having a 'genotype' element.
-	lapply(parents[sample.int(n = length(parents), size = pop)], 
+	lapply(parents[sample.int(n = length(parents), size = pop, replace = TRUE)], 
 				 function(x){
 				 	genotype <- x$genotype
 				 	flip <- sample.int(length(genotype),1)

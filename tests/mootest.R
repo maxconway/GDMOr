@@ -16,4 +16,9 @@ testpop <- list(list(genotype = c(1,1,1,1,1,1,1), phenotype = c(propone = 9, pro
 								list(genotype = c(1,1,1,1,1,1,1), phenotype = c(propone = 9, proptwo = 9))
 								)
 
-## run a test using it
+test_that('reproduce gives a plausible result', {
+	pop <- 10
+	res <- reproduce(testpop, pop)
+	
+	expect_equal(length(res), pop)
+})
