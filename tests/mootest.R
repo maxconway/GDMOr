@@ -11,9 +11,9 @@ evaluate <- function(x){
 # starting point:
 x <- list(genotype = c(0,0,0,0,0,0))
 # sample population
-testpop <- list(list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 9, proptwo = 8)),
-								list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 8, proptwo = 9)),
-								list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 7, proptwo = 7))
+testpop <- list(list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 9, proptwo = 8), dom = 4, crowding = 0.2),
+								list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 8, proptwo = 9), dom = 2, crowding = 0.2),
+								list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 7, proptwo = 7), dom = 3, crowding = 0.2)
 )
 
 test_that('reproduce gives a plausible result', {
@@ -40,4 +40,13 @@ test_that('nondomsort gives correct result', {
 	expect_that(res[[1]][['crowding']], equals(sqrt(2)))
 	expect_that(res[[2]][['crowding']], equals(sqrt(2)))
 	expect_that(res[[3]][['crowding']], equals(sqrt(5)))
+})
+
+test_that('select gives correct results', {
+	res <- select(testpop, 2)
+	
+	expect_that(length(res), equals(2))
+	
+	expect_that(res[[1]][['dom']], equals(2))
+	expect_that(res[[2]][['dom']], equals(3))
 })
