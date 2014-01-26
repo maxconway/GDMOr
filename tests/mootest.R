@@ -26,12 +26,9 @@ test_that('reproduce gives a plausible result', {
 test_that('mature gives correct result', {
 	res <- mature(testpop, evaluate)
 	
-	expectedres <- list(list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 3, proptwo = 3)),
-											list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 3, proptwo = 3)),
-											list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 3, proptwo = 3))
-	)
-	
-	expect_equal(res, expectedres)
+	expect_equal(res[[1]][['phenotype']], c(propone = 3, proptwo = 3))
+	expect_equal(res[[1]][['phenotype']], c(propone = 3, proptwo = 3))
+	expect_equal(res[[1]][['phenotype']], c(propone = 3, proptwo = 3))
 })
 
 test_that('nondomsort gives correct result', {
