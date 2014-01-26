@@ -1,5 +1,4 @@
-reproduce <- function(parents){
-	lapply(parents[sample.int(n = length(parents))], 
+reproduce <- function(parents, pop){
 	# produces a new population by mutating the parent or the required size
 	#
 	# Args:
@@ -8,6 +7,7 @@ reproduce <- function(parents){
 	# 
 	# Returns:
 	#  A list of lists of length pop, with inner lists having a 'genotype' element.
+	lapply(parents[sample.int(n = length(parents), size = pop)], 
 				 function(x){
 				 	genotype <- x$genotype
 				 	flip <- sample.int(length(genotype),1)

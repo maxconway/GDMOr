@@ -1,5 +1,4 @@
 mature <- function(children,evaluate){
-	children$phenotype <- evaluate(children$genotype)
 	# apply the evaluation function
 	# 
 	# Args: 
@@ -8,5 +7,9 @@ mature <- function(children,evaluate){
 	#
 	# Returns:
 	# A list of lists similar to children, but with a phenotype element added to each inner element
+	children <- lapply(children, function(child){
+		child$phenotype <- evaluate(child$genotype)
+		return(child)
+	}
 	return(children)
 }
