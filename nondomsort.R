@@ -6,15 +6,18 @@ nondomsort <- function(population){
 	#
 	# Returns:
 	#  a list of lists like population, but with a real 'dom' appended to each inner element
-	population <- lapply(population, function(member){
+	
+	population <- lapply(1:length(population), function(x){
+		member <- population[[x]]
+		othermembers <- population[-x]
 		
 		# placeholder
-		member$dom <- sum(sapply(population, function(othermember){
+		member$dom <- sum(sapply(othermembers, function(othermember){
 			all(othermember$phenotype >= member$phenotype) & any(othermember$phenotype > member$phenotype)
 		}))
 		
 		# placeholder
-		member$crowding <- min(sapply(population, function(othermember){
+		member$crowding <- min(sapply(othermembers, function(othermember){
 			sqrt(sum((othermember$phenotype-member$phenotype)^2))
 		}))
 		return(member)
