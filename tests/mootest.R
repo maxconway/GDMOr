@@ -23,7 +23,7 @@ test_that('reproduce gives a plausible result', {
 	expect_identical(length(res), pop)
 })
 
-test_that('mature gives a plausible result', {
+test_that('mature gives correct result', {
 	res <- mature(testpop, evaluate)
 	
 	expectedres <- list(list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 3, proptwo = 3)),
@@ -31,5 +31,5 @@ test_that('mature gives a plausible result', {
 											list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 3, proptwo = 3))
 	)
 	
-	expect_identical(res, expectedres)
+	expect_equal(res, expectedres)
 })
