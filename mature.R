@@ -10,6 +10,6 @@ mature <- function(children,evaluate){
 	children <- lapply(children, function(child){
 		child$phenotype <- evaluate(child$genotype)
 		return(child)
-	}
+	})
 	return(children)
 }
