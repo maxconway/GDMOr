@@ -20,7 +20,7 @@ test_that('reproduce gives a plausible result', {
 	pop <- 10
 	res <- reproduce(testpop, pop)
 	
-	expect_identical(length(res), pop)
+	expect_equal(length(res), pop)
 })
 
 test_that('mature gives correct result', {
