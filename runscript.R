@@ -4,6 +4,7 @@
 # Load libraries
 library(sybil)
 library(sybilSBML)
+# TODO: Load optimization software
 
 # Load data
 model <- readSBMLmod('testdata/toy.xml')

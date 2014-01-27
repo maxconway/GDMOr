@@ -7,6 +7,8 @@ nondomsort <- function(population){
 	# Returns:
 	#  a list of lists like population, but with a real 'dom' appended to each inner element
 	
+	# Would probably be faster to us a vectorized version
+	
 	population <- lapply(1:length(population), function(x){
 		member <- population[[x]]
 		othermembers <- population[-x]
