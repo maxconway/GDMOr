@@ -50,3 +50,7 @@ test_that('select gives correct results', {
 	expect_that(res[[1]][['dom']], equals(2))
 	expect_that(res[[2]][['dom']], equals(3))
 })
+
+test_that('GDMO gives plausible results', {
+	res <- GDMO(10, 10, list(list(genotype = c(1,1,1,1,1,1))), evaluate)
+})

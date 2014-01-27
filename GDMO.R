@@ -10,12 +10,17 @@ GDMO <- function(pop, gen, startingpoint, evaluate){
 	# Returns:
 	#  a list of pareto optimal solutions, each member 
 	#  being a list with elements phenotype and genotype
-	parents <- list(startingpoint)
+	parents <- startingpoint
 	currentgen = 0
+	
+	genbar <- txtProgressBar(min = 0, max = gen, style=3)
 	while(currentgen <= gen){
 		children <- reproduce(parents = parents, pop = pop)
-		population <- nondomsort(list(mature(children, evaluate), parents))
+		population <- nondomsort(c(mature(children, evaluate), parents))
 		parents <- select(population, maxpop = pop)
 		currentgen <- currentgen + 1
+		setTxtProgressBar(genbar, currentgen)
 	}
+	
+	return(parents)
 }
