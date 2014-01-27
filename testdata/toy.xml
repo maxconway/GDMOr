@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
+  <model id="Demo_TOY">
+    <listOfCompartments>
+      <compartment id="cell" name="cell" constant="true"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="cakg" name="c_akg" compartment="cell" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id='cglu' name="c_glu.ext" compartment="cell" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id='cact' name="c_act.ext" compartment="cell" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="caccoa" name="c_accoa" compartment="cell" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id='cbiomass' name="c_biomass.ext" compartment="cell" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="csuc" name="c_suc" compartment="cell" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="coaa" name="c_oaa" compartment="cell" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="cr5p" name="c_r5p" compartment="cell" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="cpyr" name="c_pyr" compartment="cell" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="cg6p" name="c_g6p" compartment="cell" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="cicit" name="c_icit" compartment="cell" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+    </listOfSpecies>
+    <listOfReactions>
+      <reaction id="j8" name="j8" reversible="false" fast="false" compartment="cell">
+        <listOfReactants>
+          <speciesReference species="cicit" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="cakg" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="j9" name="j9" reversible="false" fast="false" compartment="cell">
+        <listOfReactants>
+          <speciesReference species="cakg" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="csuc" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="Outflow2" name="Outflow2" reversible="true" fast="false" compartment="cell">
+        <annotation>
+          <microbesflux:user-reaction xmlns:microbesflux="http://tanglab.engineering.wustl.edu/dtd.xml">Outflow</microbesflux:user-reaction>
+        </annotation>
+        <listOfReactants>
+          <speciesReference species="caccoa" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+      </reaction>
+      <reaction id="j4" name="j4" reversible="false" fast="false" compartment="cell">
+        <listOfReactants>
+          <speciesReference species="cr5p" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="cpyr" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="j5" name="j5" reversible="false" fast="false" compartment="cell">
+        <listOfReactants>
+          <speciesReference species="cpyr" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="caccoa" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="j7" name="j7" reversible="false" fast="false" compartment="cell">
+        <listOfReactants>
+          <speciesReference species="caccoa" stoichiometry="1" constant="false"/>
+          <speciesReference species="coaa" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="cicit" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="j2" name="j2" reversible="false" fast="false" compartment="cell">
+        <listOfReactants>
+          <speciesReference species="cg6p" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="cr5p" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="j3" name="j3" reversible="false" fast="false" compartment="cell">
+        <listOfReactants>
+          <speciesReference species="cg6p" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="cpyr" stoichiometry="2" constant="false"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="BIOMASS0" name="BIOMASS0" reversible="false" fast="false" compartment="cell">
+        <listOfReactants>
+          <speciesReference species="cakg" stoichiometry="1.078" constant="false"/>
+          <speciesReference species="coaa" stoichiometry="1.786" constant="false"/>
+          <speciesReference species="caccoa" stoichiometry="2.928" constant="false"/>
+          <speciesReference species="cpyr" stoichiometry="2.833" constant="false"/>
+          <speciesReference species="cg6p" stoichiometry="0.205" constant="false"/>
+        </listOfReactants>
+      </reaction>
+      <reaction id="Inflow1" name="Inflow1" reversible="true" fast="false" compartment="cell">
+        <annotation>
+          <microbesflux:user-reaction xmlns:microbesflux="http://tanglab.engineering.wustl.edu/dtd.xml">Inflow</microbesflux:user-reaction>
+        </annotation>
+        <listOfProducts>
+          <speciesReference species="cg6p" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="j10" name="j10" reversible="false" fast="false" compartment="cell">
+        <listOfReactants>
+          <speciesReference species="csuc" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="coaa" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+      </reaction>
+      <reaction id="j11" name="j11" reversible="false" fast="false" compartment="cell">
+        <listOfReactants>
+          <speciesReference species="cpyr" stoichiometry="1" constant="false"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="coaa" stoichiometry="1" constant="false"/>
+        </listOfProducts>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>
