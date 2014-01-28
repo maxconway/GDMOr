@@ -4,7 +4,27 @@
 # Load libraries
 library(sybil)
 library(sybilSBML)
+library(glpkAPI)
 # TODO: Load optimization software
 
 # Load data
-model <- readSBMLmod('testdata/toy.xml')
+mp <- system.file(package = "sybil", "extdata")
+Ec_core <- readTSVmod(prefix = "Ec_core", fpath = mp, quoteChar = "\"")
+
+# Create starting point
+start <- as.list(rep(TRUE, times = length(allGenes(Ec_core))))
+names(start) <- allGenes(Ec_core)
+start <- list(start)
+
+# create evaluation function
+evaluate <- function(genotype){
+	solution <- optimizeProb(Ec_core, 
+													 names(genotype[FALSE]),
+													 lb = 0,
+													 ub = 0,
+													 retOptSol = FALSE)
+	solution$fluxes[match('EX_ac(e)',react_id(Ec_core))]
+}
+
+GDMO(100, 100, start, evaluate)
+
