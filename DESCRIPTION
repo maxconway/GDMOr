@@ -2,7 +2,8 @@ Package: GDMOr
 Title: 
 Description: 
 Version: 0.1
-Authors@R: # getOptions('devtools.desc.author')
+Author: Max Conway <max@maxwellconway.com>
+Maintainer: Max Conway <max@maxwellconway.com>
 Depends: R (>= 3.0.2)
 License: # getOptions('devtools.desc.license')
 LazyData: true
