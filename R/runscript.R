@@ -23,7 +23,7 @@ library(glpkAPI)
 # 													 lb = 0,
 # 													 ub = 0,
 # 													 retOptSol = FALSE)
-# 	solution$fluxes[match('EX_ac(e)',react_id(Ec_core))]
+# 	solution$fluxes[match(c('Biomass_Ecoli_core_w_GAM', 'EX_ac(e)'),react_id(Ec_core))]
 # }
 
 # GDMO(100, 100, ancestors, evaluate)
