@@ -11,7 +11,7 @@ reproduce <- function(parents, pop){
 				 function(x){
 				 	genotype <- x$genotype
 				 	flip <- sample.int(length(genotype),1)
-				 	genotype[flip] <- !genotype[flip]
+				 	genotype[flip] <- genotype[flip]==FALSE
 				 	list(genotype = genotype)
 				 })
 }

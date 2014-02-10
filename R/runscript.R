@@ -14,17 +14,17 @@ library(glpkAPI)
 # Create starting point
 # start <- as.list(rep(TRUE, times = length(allGenes(Ec_core))))
 # names(start) <- allGenes(Ec_core)
-# start <- list(start)
+# ancestors <- list(list(genotype = start))
 
 # create evaluation function
 # evaluate <- function(genotype){
 # 	solution <- optimizeProb(Ec_core, 
-# 													 names(genotype[FALSE]),
+# 													 names(genotype)[genotype==FALSE],
 # 													 lb = 0,
 # 													 ub = 0,
 # 													 retOptSol = FALSE)
 # 	solution$fluxes[match('EX_ac(e)',react_id(Ec_core))]
 # }
 
-# GDMO(100, 100, start, evaluate)
+# GDMO(100, 100, ancestors, evaluate)
 

@@ -4,7 +4,7 @@ GDMO <- function(pop, gen, startingpoint, evaluate){
 	# Args:
 	#  pop: int, the population to be used throughout
 	#  gen: in, the number of generations to run for
-	#  startingpoint: a list with a binary element phenotype
+	#  startingpoint: a list with a binary element genotype
 	#  evaluate: and evaluation function
 	#
 	# Returns:
