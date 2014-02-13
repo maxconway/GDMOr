@@ -5,6 +5,7 @@
 library(sybil)
 library(sybilSBML)
 library(glpkAPI)
+library(plyr)
 
 # Load data
 mp <- system.file(package = "sybil", "extdata")
@@ -34,5 +35,14 @@ evaluate <- function(genotype){
 	phenotype <- solution$fluxes[match(targetFluxes,react_id(Ec_core))]
 }
 
-results <- GDMO(100, 100, ancestors, evaluate)
+reslist <- GDMO(300, 300, ancestors, evaluate)
+
+resdf <- ldply(.data = reslist, .progress = 'text', .fun = function(individual){
+	data.frame(
+		genotype = individual$genotype,
+phenotype = {names(individual$phenotype) <- targetFluxes; as.list(individual$phenotype)},
+dom = individual$dom,
+crowding = individual$crowding
+	)
+})
 
