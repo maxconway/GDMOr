@@ -9,6 +9,7 @@ library(glpkAPI)
 # Load data
 mp <- system.file(package = "sybil", "extdata")
 Ec_core <- readTSVmod(prefix = "Ec_core", fpath = mp, quoteChar = "\"")
+targetFluxes <- c('Biomass_Ecoli_core_w_GAM', 'EX_ac(e)')
 
 # Create starting point
 start <- as.list(rep(TRUE, times = length(allGenes(Ec_core))))
@@ -30,7 +31,7 @@ evaluate <- function(genotype){
 													 lb = 0,
 													 ub = 0,
 													 retOptSol = FALSE)
-	solution$fluxes[match(c('Biomass_Ecoli_core_w_GAM', 'EX_ac(e)'),react_id(Ec_core))]
+	phenotype <- solution$fluxes[match(targetFluxes,react_id(Ec_core))]
 }
 
 results <- GDMO(100, 100, ancestors, evaluate)
