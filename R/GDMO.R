@@ -14,13 +14,14 @@ GDMO <- function(population, generations, startingpoint, evaluate){
 	currentgen <- 1
 	
 	genbar <- txtProgressBar(min = 0, max = generations, style=3)
-	while(currentgen <= generations){
-		children <- reproduce(parents = parents, pop = population)
-		adults <- nondomsort(c(mature(children, evaluate), parents))
-		parents <- select(adults, maxpop = population)
-		currentgen <- currentgen + 1
-		setTxtProgressBar(genbar, currentgen)
-	}
-	
-	return(parents)
+	tryCatch(
+		while(currentgen <= generations){
+			children <- reproduce(parents = parents, pop = population)
+			adults <- nondomsort(c(mature(children, evaluate), parents))
+			parents <- select(adults, maxpop = population)
+			currentgen <- currentgen + 1
+			setTxtProgressBar(genbar, currentgen)
+		},
+		finally = return(parents)
+	)
 }
