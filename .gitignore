@@ -5,3 +5,4 @@
 man/
 *.html
 NAMESPACE
+temp/*
