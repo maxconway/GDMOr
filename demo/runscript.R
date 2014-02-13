@@ -19,7 +19,7 @@ ancestors <- list(list(genotype = start))
 evaluate <- function(genotype){
 	# avoid an error with no knockouts
 	# sybil should really deal with this
-	genes <- if(all(genotype)){
+	genes <- if(suppressWarnings(all(genotype))){
 		NULL
 	} else{
 		names(genotype)[genotype==FALSE]
@@ -33,5 +33,5 @@ evaluate <- function(genotype){
 	solution$fluxes[match(c('Biomass_Ecoli_core_w_GAM', 'EX_ac(e)'),react_id(Ec_core))]
 }
 
-GDMO(100, 100, ancestors, evaluate)
+results <- GDMO(100, 100, ancestors, evaluate)
 
