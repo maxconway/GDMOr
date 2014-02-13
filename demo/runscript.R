@@ -17,8 +17,16 @@ ancestors <- list(list(genotype = start))
 
 # create evaluation function
 evaluate <- function(genotype){
+	# avoid an error with no knockouts
+	# sybil should really deal with this
+	genes <- if(all(genotype)){
+		NULL
+	} else{
+		names(genotype)[genotype==FALSE]
+	}
+	# call sybil to computer the fluxes
 	solution <- optimizeProb(object = Ec_core, 
-													 gene = names(genotype)[genotype==FALSE],
+													 gene = genes,
 													 lb = 0,
 													 ub = 0,
 													 retOptSol = FALSE)
