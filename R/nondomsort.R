@@ -9,14 +9,24 @@ nondomsort <- function(population){
 	
 	# Would probably be faster to us a vectorized version
 	
+	phenotypes <- ldply(reslist,function(x){x$phenotype})
+	phenotypes$front <- 0
+	front <- 0
+	while(any(phenotypes$front==front)){
+		phenotypes[phenotypes$front==front,'front'] <- front + 
+			sapply(phenotypes[phenotypes$front==front,],
+						 function(member){any(sapply(phenotypes[phenotypes$front==front,], function(othermember){
+						 	all(othermember$phenotype >= member$phenotype) & any(othermember$phenotype > member$phenotype)
+						 }))}
+			)
+	}
+	
 	population <- lapply(1:length(population), function(x){
 		member <- population[[x]]
-		othermembers <- population[-x]
+		othermembers <- population[-x]		
 		
 		# placeholder
-		member$dom <- sum(sapply(othermembers, function(othermember){
-			all(othermember$phenotype >= member$phenotype) & any(othermember$phenotype > member$phenotype)
-		}))
+		member$front <- phenotypes[x,'front']
 		
 		# placeholder
 		member$crowding <- min(sapply(othermembers, function(othermember){
