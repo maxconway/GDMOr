@@ -42,7 +42,8 @@ resdf <- ldply(.data = reslist, .progress = 'text', .fun = function(individual){
 		genotype = individual$genotype,
 phenotype = {names(individual$phenotype) <- targetFluxes; as.list(individual$phenotype)},
 dom = individual$dom,
-crowding = individual$crowding
+crowding = individual$crowding,
+kos = individual$kos
 	)
 })
 

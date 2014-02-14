@@ -10,6 +10,7 @@ select <- function(population, maxpop){
 	head(population[order(
 		sapply(population, function(x){x$dom}),
 		-sapply(population, function(x){x$crowding}),
+		-sapply(population, function(x){x$kos}),
 		runif(length(population))
 		)],
 			 n = maxpop)

@@ -22,6 +22,9 @@ nondomsort <- function(population){
 		member$crowding <- min(sapply(othermembers, function(othermember){
 			sqrt(sum((othermember$phenotype-member$phenotype)^2))
 		}))
+		
+		member$kos <- sum(member$genotype==FALSE)
+		
 		return(member)
 	})
 }
