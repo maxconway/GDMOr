@@ -6,6 +6,8 @@ nondomsort <- function(population){
 	#
 	# Returns:
 	#  a list of lists like population, but with a real 'dom' appended to each inner element
+	# 
+	#' @import plyr
 	
 	# Would probably be faster to us a vectorized version
 	
@@ -34,22 +36,21 @@ nondomsort <- function(population){
 		member <- population[[x]]
 		othermembers <- population[-x]		
 		
-		# placeholder
 		member$front <- phenotypes[x,'front']
 		
 		# placeholder
 		member$crowding <- mean(head(n = 2,
 																 x = sort(partial = c(1,2), 
-																 				 x = sapply(othermembers, function(othermember){
+																 				 x = aaply(.data = othermembers, 
+																 				 					 .margins = 1,
+																 				 					 .expand = FALSE,
+																 				 					 .fun = function(othermember){
 																 				 	sqrt(sum((othermember$phenotype-member$phenotype)^2))
 																 				 }
 																 				 )
 																 )
 		)
-		)
-		
-		member$kos <- sum(member$genotype==FALSE)
-		
+		)		
 		return(member)
 	})
 }
