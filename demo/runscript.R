@@ -26,24 +26,25 @@ evaluate <- function(genotype){
 	} else{
 		names(genotype)[genotype==FALSE]
 	}
-	# call sybil to computer the fluxes
+	# call sybil to compute the fluxes
 	solution <- optimizeProb(object = Ec_core, 
 													 gene = genes,
 													 lb = 0,
 													 ub = 0,
 													 retOptSol = FALSE)
-	phenotype <- solution$fluxes[match(targetFluxes,react_id(Ec_core))]
+	phenotype <- c(solution$fluxes[match(targetFluxes,react_id(Ec_core))], sum(genotype==FALSE))
 }
 
-reslist <- GDMO(300, 300, ancestors, evaluate)
+reslist <- GDMO(100, 100, ancestors, evaluate)
 
 resdf <- ldply(.data = reslist, .progress = 'text', .fun = function(individual){
 	data.frame(
 		genotype = individual$genotype,
-phenotype = {names(individual$phenotype) <- targetFluxes; as.list(individual$phenotype)},
-dom = individual$dom,
-crowding = individual$crowding,
-kos = individual$kos
+phenotype = {names(individual$phenotype) <- c(targetFluxes, 'kos'); as.list(individual$phenotype)},
+dom = individual$front,
+crowding = individual$crowding
 	)
 })
+
+
 
