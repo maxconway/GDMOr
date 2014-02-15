@@ -9,16 +9,25 @@ nondomsort <- function(population){
 	
 	# Would probably be faster to us a vectorized version
 	
-	phenotypes <- ldply(reslist,function(x){x$phenotype})
+	phenotypes <- ldply(population,function(x){x$phenotype})
 	phenotypes$front <- 0
 	front <- 0
 	while(any(phenotypes$front==front)){
 		phenotypes[phenotypes$front==front,'front'] <- front + 
-			sapply(phenotypes[phenotypes$front==front,],
-						 function(member){any(sapply(phenotypes[phenotypes$front==front,], function(othermember){
-						 	all(othermember$phenotype >= member$phenotype) & any(othermember$phenotype > member$phenotype)
-						 }))}
+			aaply(.data = phenotypes[phenotypes$front==front,-ncol(phenotypes)],
+						.margins = 1,
+						.expand = FALSE,
+						.fun = function(member){
+							any(aaply(.data = phenotypes[phenotypes$front==front,-ncol(phenotypes)], 
+												.margins = 1, 
+												.expand = FALSE,
+												.fun = function(othermember){
+													all(othermember >= member) & any(othermember > member)
+												}
+							))
+						}
 			)
+		front <- front +1
 	}
 	
 	population <- lapply(1:length(population), function(x){
@@ -29,9 +38,15 @@ nondomsort <- function(population){
 		member$front <- phenotypes[x,'front']
 		
 		# placeholder
-		member$crowding <- min(sapply(othermembers, function(othermember){
-			sqrt(sum((othermember$phenotype-member$phenotype)^2))
-		}))
+		member$crowding <- mean(head(n = 2,
+																 x = sort(partial = c(1,2), 
+																 				 x = sapply(othermembers, function(othermember){
+																 				 	sqrt(sum((othermember$phenotype-member$phenotype)^2))
+																 				 }
+																 				 )
+																 )
+		)
+		)
 		
 		member$kos <- sum(member$genotype==FALSE)
 		
