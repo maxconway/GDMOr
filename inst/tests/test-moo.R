@@ -11,9 +11,9 @@ evaluate <- function(x){
 # starting point:
 x <- list(genotype = c(0,0,0,0,0,0))
 # sample population
-testpop <- list(list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 9, proptwo = 8), dom = 4, crowding = 0.2),
-								list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 8, proptwo = 9), dom = 2, crowding = 0.2),
-								list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 7, proptwo = 7), dom = 3, crowding = 0.2)
+testpop <- list(list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 9, proptwo = 8), front = 0, crowding = 0.2),
+								list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 8, proptwo = 9), front = 1, crowding = 0.2),
+								list(genotype = c(1,1,1,1,1,1), phenotype = c(propone = 7, proptwo = 7), front = 1, crowding = 0.2)
 )
 
 test_that('reproduce gives a plausible result', {
@@ -33,9 +33,9 @@ test_that('mature gives correct result', {
 
 test_that('nondomsort gives correct result', {
 	res <- nondomsort(testpop)
-	expect_that(res[[1]][['dom']], equals(0))
-	expect_that(res[[2]][['dom']], equals(0))
-	expect_that(res[[3]][['dom']], equals(2))
+	expect_that(res[[1]][['front']], equals(0))
+	expect_that(res[[2]][['front']], equals(0))
+	expect_that(res[[3]][['front']], equals(1))
 	
 	expect_that(res[[1]][['crowding']], equals(sqrt(2)))
 	expect_that(res[[2]][['crowding']], equals(sqrt(2)))
@@ -47,8 +47,8 @@ test_that('select gives correct results', {
 	
 	expect_that(length(res), equals(2))
 	
-	expect_that(res[[1]][['dom']], equals(2))
-	expect_that(res[[2]][['dom']], equals(3))
+	expect_that(res[[1]][['front']], equals(0))
+	expect_that(res[[2]][['front']], equals(1))
 })
 
 test_that('GDMO gives plausible results', {
