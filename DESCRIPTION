@@ -4,6 +4,9 @@ Description:
 Version: 0.1
 Author: Max Conway <max@maxwellconway.com>
 Maintainer: Max Conway <max@maxwellconway.com>
-Depends: R (>= 3.0.2)
+Depends:
+    R (>= 3.0.2)
+Imports:
+    plyr
 License: # getOptions('devtools.desc.license')
 LazyData: true
