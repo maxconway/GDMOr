@@ -54,5 +54,7 @@ cytoscape_load <- function(model){
 									 default.shape = 'ellipse'
 									 )
 	
-	layoutNetwork(window, layout.name = 'force-directed')
+	window@graph <- graph
+	displayGraph(window)
+	layoutNetwork(window, layout.name = 'force-directed')	
 }
