@@ -54,7 +54,15 @@ cytoscape_load <- function(model){
 									 default.shape = 'ellipse'
 									 )
 	
+	setNodeColorRule(obj = window,
+									 node.attribute.name = 'type',
+									 mode = 'lookup',
+									 control.points = c('metabolite', 'reaction'),
+									 colors = c('blue', 'red')
+									 )
+	
 	window@graph <- graph
 	displayGraph(window)
+	redraw(window)
 	layoutNetwork(window, layout.name = 'force-directed')	
 }
