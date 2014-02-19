@@ -1,3 +1,4 @@
+#' @import plyr
 nondomsort <- function(population){
 	# Adds a property specifying the number of individuals that dominate each individual
 	#
@@ -19,14 +20,17 @@ nondomsort <- function(population){
 			aaply(.data = phenotypes[phenotypes$front==front,-ncol(phenotypes)],
 						.margins = 1,
 						.expand = FALSE,
+#						.parallel = TRUE,
 						.fun = function(member){
-							any(aaply(.data = phenotypes[phenotypes$front==front,-ncol(phenotypes)], 
-												.margins = 1, 
-												.expand = FALSE,
-												.fun = function(othermember){
-													all(othermember >= member) & any(othermember > member)
-												}
-							))
+							adjusted_matrix <- phenotypes[phenotypes$front==front,-ncol(phenotypes)] - member[rep(1, sum(phenotypes$front==front)),]
+							any(do.call(pmax.int,adjusted_matrix)>0 & do.call(pmin.int,adjusted_matrix)>=0)
+# 							any(aaply(.data = phenotypes[phenotypes$front==front,-ncol(phenotypes)], 
+# 												.margins = 1, 
+# 												.expand = FALSE,
+# 												.fun = function(othermember){
+# 													all(othermember >= member) & any(othermember > member)
+# 												}
+# 							))
 						}
 			)
 		front <- front +1
