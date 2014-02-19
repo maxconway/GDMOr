@@ -1,5 +1,15 @@
 require(ggplot2)
 require(grid)
+#' Produces a pair of graphs showing genes with unusually high correlations with position in the pareto front.
+#' 
+#' @param dataset a dataframe with some columns prefixed by \code{genotype.},
+#'   and some by \code{phenotype.}
+#' 
+#' @import ggplot2
+#' @import grid
+#' @import stringr
+#' 
+#' @export
 outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2){
 	
 	dataset$pos <- princomp(dataset[,grep(pattern='phenotype.*',setdiff(colnames(resdf),'phenotype.kos'))])$scores[,'Comp.1']

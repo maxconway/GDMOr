@@ -1,3 +1,4 @@
+#' @import RCytoscape
 cytoscape_load <- function(model){
 	# make adjacency matrix
 	a <- as.matrix(model@S)

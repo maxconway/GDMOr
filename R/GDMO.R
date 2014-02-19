@@ -1,15 +1,15 @@
+#' Performs GDMO
+#' 
+#' @param population int, the population to be used.
+#' @param generations: int, the number of generations to run for
+#' @param startingpoint: a list with a binary element genotype
+#' @param evaluate: and evaluation function
+#'   
+#' @return a list of pareto optimal solutions, each member being a list with
+#'   elements phenotype and genotype
+#'   
+#' @export
 GDMO <- function(population, generations, startingpoint, evaluate){
-	# Performs GDMO
-	#
-	# Args:
-	#  population: int, the population to be used.
-	#  generations: int, the number of generations to run for
-	#  startingpoint: a list with a binary element genotype
-	#  evaluate: and evaluation function
-	#
-	# Returns:
-	#  a list of pareto optimal solutions, each member 
-	#  being a list with elements phenotype and genotype
 	parents <- startingpoint
 	currentgen <- 1
 	
