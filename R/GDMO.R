@@ -9,23 +9,25 @@
 #'   elements phenotype and genotype
 #'   
 #' @export
-GDMO <- function(population, generations, startingpoint, evaluate){
+#' @import lubridate
+GDMO <- function(population, generations, startingpoint, evaluate, savefile = 'checkpoint.RData'){
 	parents <- startingpoint
 	currentgen <- 1
 	
-	genbar <- txtProgressBar(min = 0, max = generations, style=3)
-	starttime <- proc.time()[3]
-	tryCatch(
+	genbar <- txtProgressBar(min = 0, max = generations, style=2)
+	starttime <- now()
+#	tryCatch(
 		while(currentgen <= generations){
 			children <- reproduce(parents = parents, pop = population)
 			adults <- nondomsort(c(mature(children, evaluate), parents))
 			parents <- select(adults, maxpop = population)
 			currentgen <- currentgen + 1
-			if(proc.time()[3] - starttime > 300 && currentgen%%10==0){
-				save(parents, file='checkpoint.RData')
+			if((now() - starttime) > new_difftime(seconds = 30) && currentgen%%10==0){
+				save(parents, file = savefile)
 			}
 			setTxtProgressBar(genbar, currentgen)
-		},
-		finally = return(parents)
-	)
+			print(now() + (now()-starttime)*(generations/currentgen-1))
+		}#,
+#		finally = return(parents)
+#	)
 }
