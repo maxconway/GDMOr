@@ -13,13 +13,16 @@ heatmapify <- function(dataset, colour='purple'){
                               ]
   )
   
+  # jitter v slightly to avoid a stack overflow from too manhy identical values
+  vmod <- v+matrix(rnorm(prod(dim(v)),sd = 0.0001), nrow = nrow(v), ncol = ncol(v))
+  
   # cluster rows
-  hc.rows <- hclust(dist(v))
+  hc.rows <- hclust(dist(vmod))
   
   # transpose the matrix and cluster columns
-  hc.cols <- hclust(dist(t(v)))
+  hc.cols <- hclust(dist(t(vmod)))
   
-  r <- v[,]
+  r <- vmod[,]
   
   heatmap(x=r,
           Rowv=NA,
