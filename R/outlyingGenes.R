@@ -8,11 +8,16 @@ require(grid)
 #' @import ggplot2
 #' @import grid
 #' @import stringr
+#' @import kernlab
 #' 
 #' @export
 outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2){
 	
-	dataset$pos <- princomp(dataset[,grep(pattern='phenotype.*',setdiff(colnames(resdf),'phenotype.kos'))])$scores[,'Comp.1']
+	dataset$pos <- as.numeric(kpca(~.,
+											dataset[,grep(pattern='phenotype.*',setdiff(colnames(dataset),'phenotype.kos'))], 
+											kernel = polydot(degree=5), 
+											features=1
+	)@rotated)
 	
 	a <- data.frame(name = str_replace_all(grep(pattern='genotype.*',colnames(dataset),value=T),fixed('genotype.'),''),
 									correlation = cor(dataset)[,'pos'][grep(pattern='genotype.*',colnames(dataset),value=T)]
@@ -52,7 +57,8 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2){
 																					 		size = 2.5,
 																					 		y = name,
 																					 		label = name,
-																					 		hjust = 0.5+0.5*-sign(correlation)),
+																					 		hjust = 0.5+0.5*-sign(correlation)
+																					 ),
 																					 show_guide = FALSE
 																)
 	)
