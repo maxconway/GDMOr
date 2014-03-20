@@ -4,9 +4,10 @@
 #' finds active reactions from this.
 #' 
 #' @param model a sybil model
-#' @param genes a character vector genes
+#' @param genes a vector vector of gene presence or expression
 #' 
-#' @return a character vector of reactions
+#' 
+#' @return a vector of reaction presence of activity
 #'   
 #' @details Works by creating a new environment and evaluating gpr rules
 #' computationally. Could be a security concern, so check what you're choosing
@@ -17,13 +18,21 @@
 #' @export
 gene2rxn <- function(model, genes){
 	# check arguments
-	stopifnot(genes %in% model@allGenes)
+	if(length(genes) != length(model@allGenes)){
+		stop('requires a vector of gene presence. Try model@allGenes %in% genes')
+	}
 	
 	env <- new.env(parent = baseenv())
 	assign('x', genes, env)
-	selectedrxns_bool <- aaply(mod@gprRules,1,function(rule){
+	
+	if(is.numeric(genes)){
+		assign('&', function(x,y){min(x,y)}, env)
+		assign('|', function(x,y){max(x,y)}, env)
+	}
+	
+	rxnsactivity <- aaply(model@gprRules,1,function(rule){
 		res <- eval(expr=parse(text=rule),envir=env)
 		ifelse(is.null(res),FALSE,res)
 	})
-	selectedrxns <- mod@react_id[selectedrxns_bool]
+	return(rxnactivity)
 }

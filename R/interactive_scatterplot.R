@@ -1,20 +1,29 @@
 #' @title Select a point from a scatterplot
 #'   
-#' @description Creates a scatter plot, and allows the user to select a point
-#'   from it. Reactions associated with this point will then be selected in Cytoscape.
+#' @description Creates a scatter plot, and allows the user to select a point 
+#'   from it. Pushes the activation of reactions to a cytoscape window.
 #'   
 #' @param dataset a data frame
 #' @param x,y column names from the data frame to be plotted
 #' @param model a sybil model
 #' @param cw a cytoscape window
 #'   
+#' @return returns the activities of the reactions as a named vector, but mainly
+#'   used for the side effect of setting the 'activity' attribute in cytoscape.
+#'   
 point_selector <- function(dataset, x, y, model, cw){
 	plot(x=dataset[[x]], y=dataset[[y]])
 	ind <- identify(x=dataset[[x]], y=dataset[[y]], n=1)
 	
-	selectedrxns <- gene2rxns(model, model@allGenes[dataset[ind,grep('^phenotype\\.',colnames(dataset))]])
-	
-	selectNodes(cw, selectedrxns, FALSE)
+	rxnact <- gene2rxn(model, dataset[ind,grep('^genotype\\.',x=colnames(dataset))])
+	names(rxnact) <- model@react_id
+	setNodeAttributesDirect(obj=cw, 
+													attribute.name='activity', 
+													attribute.type='double', 
+													node.names=model@react_id, 
+													values=rxnact
+													)
+	rxnact
 }
 
 #' @title Select a box from a scatterplot

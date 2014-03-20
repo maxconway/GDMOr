@@ -48,6 +48,12 @@ cytoscape_load <- function(model){
 														 default.value='error'
 	)
 	
+	graph <- initNodeAttribute(graph=graph, 
+														 attribute.name='activity', 
+														 attribute.type='double', 
+														 default.value='1'
+	)
+	
 	nodeData(graph, model@met_id, 'type') <- 'metabolite'
 	nodeData(graph, model@react_id, 'type') <- 'reaction'
 	nodeData(graph, model@met_id, 'label') <- model@met_id
