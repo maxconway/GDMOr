@@ -10,7 +10,8 @@
 #'   
 #' @return returns the activities of the reactions as a named vector, but mainly
 #'   used for the side effect of setting the 'activity' attribute in cytoscape.
-#'   
+#' 
+#' @export
 point_selector <- function(dataset, x, y, model, cw){
 	plot(x=dataset[[x]], y=dataset[[y]])
 	ind <- identify(x=dataset[[x]], y=dataset[[y]], n=1)

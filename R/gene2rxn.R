@@ -30,9 +30,9 @@ gene2rxn <- function(model, genes){
 		assign('|', function(x,y){max(x,y)}, env)
 	}
 	
-	rxnsactivity <- aaply(model@gprRules,1,function(rule){
+	rxnsactivity <- laply(model@gprRules,function(rule){
 		res <- eval(expr=parse(text=rule),envir=env)
-		ifelse(is.null(res),FALSE,res)
+		ifelse(is.null(res),1,as.numeric(res))
 	})
-	return(rxnactivity)
+	return(rxnsactivity)
 }
