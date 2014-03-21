@@ -19,7 +19,7 @@ point_selector <- function(dataset, x, y, model, cw){
 	names(rxnact) <- model@react_id
 	setNodeAttributesDirect(obj=cw, 
 													attribute.name='activity', 
-													attribute.type='double', 
+													attribute.type='numeric', 
 													node.names=model@react_id, 
 													values=rxnact
 													)

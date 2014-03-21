@@ -50,7 +50,7 @@ cytoscape_load <- function(model){
 	
 	graph <- initNodeAttribute(graph=graph, 
 														 attribute.name='activity', 
-														 attribute.type='double', 
+														 attribute.type='numeric', 
 														 default.value='1'
 	)
 	
