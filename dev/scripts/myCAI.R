@@ -81,6 +81,4 @@ getCAIs <- function (DNA, anngenes, referenceGenes = anngenes@elementMetadata@li
 	
 }
 
-ping()
-
 
