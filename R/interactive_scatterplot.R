@@ -13,8 +13,8 @@
 #' 
 #' @export
 point_selector <- function(dataset, x, y, model, cw){
-	plot(x=dataset[[x]], y=dataset[[y]])
-	ind <- identify(x=dataset[[x]], y=dataset[[y]], n=1)
+	plot(x=dataset[[x]], y=dataset[[y]], xlab = x, ylab = y, cex=0.5)
+	ind <- identify(x=dataset[[x]], y=dataset[[y]], n=1, plot=FALSE)
 	
 	rxnact <- gene2rxn(model, dataset[ind,grep('^genotype\\.',x=colnames(dataset))])
 	names(rxnact) <- model@react_id
@@ -24,7 +24,7 @@ point_selector <- function(dataset, x, y, model, cw){
 													node.names=model@react_id, 
 													values=rxnact
 													)
-	rxnact
+	invisbile(rxnact)
 }
 
 #' @title Select a box from a scatterplot

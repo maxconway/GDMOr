@@ -80,7 +80,7 @@ cytoscape_load <- function(model){
 									 node.attribute.name = 'type',
 									 mode = 'lookup',
 									 control.points = c('metabolite', 'reaction'),
-									 colors = c('blue', 'red')
+									 colors = c('lightgreen', 'red')
 	)
 	
 	setEdgeColorRule(window, 
