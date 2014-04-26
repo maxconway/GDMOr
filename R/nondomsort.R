@@ -1,16 +1,11 @@
+#' Adds a property specifying the number of individuals that dominate each individual
+#'
+#' @param population a list of lists, each inner element must have a vector element 'phenotype'
+#'
+#' @return a list of lists like population, but with a real 'dom' appended to each inner element
+#' 
 #' @import plyr
 nondomsort <- function(population){
-	# Adds a property specifying the number of individuals that dominate each individual
-	#
-	# Args:
-	#  population: a list of lists, each inner element must have a vector element 'phenotype'
-	#
-	# Returns:
-	#  a list of lists like population, but with a real 'dom' appended to each inner element
-	# 
-	#' @import plyr
-	
-	# Would probably be faster to us a vectorized version
 	
 	phenotypes <- ldply(population,function(x){x$phenotype})
 	phenotypes$front <- 0

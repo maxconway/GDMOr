@@ -7,6 +7,15 @@ Maintainer: Max Conway <max@maxwellconway.com>
 Depends:
     R (>= 3.0.2)
 Imports:
-    plyr
+    ggplot2,
+    gplots,
+    grid,
+    kernlab,
+    lubridate,
+    plyr,
+    RCytoscape,
+    R.matlab,
+    stringr,
+    sybil
 License: # getOptions('devtools.desc.license')
 LazyData: true

@@ -1,5 +1,3 @@
-require(ggplot2)
-require(grid)
 #' Produces a pair of graphs showing genes with unusually high correlations with position in the pareto front.
 #' 
 #' @param dataset a dataframe with some columns prefixed by \code{genotype.},

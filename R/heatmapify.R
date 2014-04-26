@@ -4,6 +4,7 @@
 #'   and some by \code{phenotype.}
 #' @param colour the colour for the resulting heatmap
 #' 
+#' @export
 heatmapify <- function(dataset, colour='purple'){
   
   v=as.matrix(1*dataset[order(princomp(dataset[,grep(pattern='phenotype.*',setdiff(colnames(resdf),'phenotype.kos'))])$scores[,'Comp.1']),

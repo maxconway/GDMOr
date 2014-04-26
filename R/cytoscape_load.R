@@ -1,3 +1,5 @@
+#' Loads a metabolic model into cytoscape, and sets up visual mappings
+#' 
 #' @import RCytoscape
 #' @export
 cytoscape_load <- function(model){

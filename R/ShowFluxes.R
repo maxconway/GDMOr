@@ -5,17 +5,18 @@ Normalize <- function(x){
 	return(result);
 }
 
+#' Shows the normalized fluxes in cytoscape.
+#' 
+#' Requires that the graph is already present, and cytoscape attached.
+#' Defunct until change to new chromosome datastructure.
+#'
+#' @param cytoscapeWindow the cytoscape window which is to be used
+#' @param mod the sybil model
+#' @param chromosomes the chromosomes that are to be displayed, in order
+#' @param reactions reaction table containing columns \code{Abbreviation} and \code{GeneAssociation}
+#' 
+#' @import gplots sybil
 ShowFluxes <- function(cytoscapeWindow, mod, chromosomes, reactions){
-	require(gplots)
-	require(sybil)
-	# Shows the normalized fluxes in cytoscape.
-	# Requires that the graph is already present, and cytoscape attached.
-	#
-	# Args:
-	#   cytoscapeWindow: the cytoscape window which is to be used
-	#   mod: the sybil model
-	#   chromosomes: the chromosomes that are to be displayed, in order
-	#   reactions: reaction table containing columns 'Abbreviation' and 'GeneAssociation'
 	setNodeColorRule(cytoscapeWindow,
 									 node.attribute.name='flux',
 									 control.points=c(-3.3,0,3.3),

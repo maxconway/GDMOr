@@ -1,4 +1,6 @@
 GDMOr
 =====
-GDMOr is an R implementation of [GDMO](http://bioinformatics.oxfordjournals.org/content/28/23/3097.full).
-A flexible and robust interface is a particular goal.
+This package is intended to provide tools for multi-objective metabolic engineering.
+The main components are as follows:
+- `GDMO` provides a generic, pure R multi-objective optimization framework, based on NSGA-II.
+- `heatmapify`, `outlyingGenes`, `ShowFluxes` and `interactive_scatterplot` are functions to analyse and understand the results of multi-objective optimization. Several of these use the Cytoscape network visualization package.
