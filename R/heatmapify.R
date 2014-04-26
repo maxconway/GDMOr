@@ -7,7 +7,7 @@
 #' @export
 heatmapify <- function(dataset, colour='purple'){
   
-  v=as.matrix(1*dataset[order(princomp(dataset[,grep(pattern='phenotype.*',setdiff(colnames(resdf),'phenotype.kos'))])$scores[,'Comp.1']),
+  v=as.matrix(1*dataset[order(princomp(dataset[,grep(pattern='phenotype.*',setdiff(colnames(dataset),'phenotype.kos'))])$scores[,'Comp.1']),
                               grep(pattern='genotype.*',
                                    colnames(dataset)
                               )
@@ -27,14 +27,14 @@ heatmapify <- function(dataset, colour='purple'){
   
   heatmap(x=r,
           Rowv=NA,
-          Colv=NULL,
+          Colv=NA,
           labRow=NA,
           labCol=NA,
           ylab='strain, sorted by distance from WT',
           xlab='gene, clustered by Manhattan distance',
           col=c('ghostwhite',colour),
           scale='none',
-          distfun=function(x){dist(x,'manhattan')}
+          distfun=function(x){dist(x)}
   )
   
 }
