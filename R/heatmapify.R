@@ -18,16 +18,16 @@ heatmapify <- function(dataset, colour='purple'){
   vmod <- v+matrix(rnorm(prod(dim(v)),sd = 0.0001), nrow = nrow(v), ncol = ncol(v))
   
   # cluster rows
-  hc.rows <- hclust(dist(vmod))
+#   hc.rows <- hclust(dist(vmod))
   
   # transpose the matrix and cluster columns
-  hc.cols <- hclust(dist(t(vmod)))
+#   hc.cols <- hclust(dist(t(vmod)))
   
   r <- vmod[,]
   
   heatmap(x=r,
           Rowv=NA,
-          Colv=NA,
+          Colv=NULL,
           labRow=NA,
           labCol=NA,
           ylab='strain, sorted by distance from WT',
