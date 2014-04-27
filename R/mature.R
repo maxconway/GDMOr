@@ -6,7 +6,9 @@
 #' @return A list of lists similar to children, but with a phenotype element added to each inner element
 mature <- function(children,evaluate){
 	children <- lapply(children, function(child){
+		phenotype_names <- names(child$phenotype)
 		child$phenotype <- evaluate(child$genotype)
+		names(child$phenotype) <- phenotype_names
 		return(child)
 	})
 	return(children)
