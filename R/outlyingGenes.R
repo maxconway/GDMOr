@@ -12,9 +12,9 @@
 outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems){
 	
 	dataset$pos <- as.numeric(kpca(~.,
-											dataset[,grep(pattern='phenotype.*',setdiff(colnames(dataset),'phenotype.kos'))], 
-											kernel = polydot(degree=5), 
-											features=1
+																 dataset[,grep(pattern='phenotype.*',setdiff(colnames(dataset),'phenotype.kos'))], 
+																 kernel = polydot(degree=5), 
+																 features=1
 	)@rotated)
 	
 	a <- data.frame(name = str_replace_all(grep(pattern='genotype.*',colnames(dataset),value=T),fixed('genotype.'),''),
@@ -59,14 +59,18 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 	
 	distributionPlot <- bothplots(ggplot(a[abs(a$correlation)!=0,])
 																+geom_point(aes(x=correlation,y=name, colour = subSystem))
-																+geom_text(data = a[a$correlation>(upperlimit*sd(a.norm$correlation,na.rm=T)) | a$correlation<(lowerlimit*sd(a.norm$correlation,na.rm=T)),],
-																					 aes(x = correlation,
-																					 		size = 2.5,
-																					 		y = name,
-																					 		label = round(expression,3),
-																					 		hjust = 0.5+0.5*-sign(correlation)
-																					 ),
-																					 show_guide = FALSE
+																+ try_default({
+																	geom_text(data = a[a$correlation>(upperlimit*sd(a.norm$correlation,na.rm=T)) | a$correlation<(lowerlimit*sd(a.norm$correlation,na.rm=T)),],
+																						aes(x = correlation,
+																								size = 2.5,
+																								y = name,
+																								label = round(expression,3),
+																								hjust = 0.5+0.5*-sign(correlation)
+																						),
+																						show_guide = FALSE
+																	)
+																},
+																NULL
 																)
 	)
 	
@@ -85,3 +89,9 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 	
 	return(na.omit(a[a$correlation>(upperlimit*sd(a.norm$correlation,na.rm=T)) | a$correlation<(lowerlimit*sd(a.norm$correlation,na.rm=T)),]))
 }
+
+# temp <- melt(dataset,id.vars=grep(pattern='genotype.*',colnames(dataset),value=T,invert=TRUE))
+# temp$gene <- str_replace_all(temp$variable, fixed('genotype.'), '')
+# temp$expression <- temp$value
+# temp$subSystem <- factor(genes_subsystems[match(temp$gene, genes_subsystems$genes), 'SubSystem'])
+# temp %.% group_by(pos, subSystem) %.% summarize(expression = mean(expression)) %.% ggplot(aes(x=pos, y=expression, colour=subSystem)) + geom_line()
