@@ -12,14 +12,22 @@
 #'   used for the side effect of setting the 'activity' attribute in cytoscape.
 #' 
 #' @export
-point_selector <- function(dataset, x, y, model, cw){
+point_selector <- function(dataset, x, y, model, cw, attribute='activity'){
 	plot(x=dataset[[x]], y=dataset[[y]], xlab = x, ylab = y, cex=0.5)
 	ind <- identify(x=dataset[[x]], y=dataset[[y]], n=1, plot=FALSE)
 	
 	rxnact <- gene2rxn(model, dataset[ind,grep('^genotype\\.',x=colnames(dataset))])
 	names(rxnact) <- model@react_id
+	
+	#Cytoscape stuff
+	graph <- initNodeAttribute(graph=getGraph(cw), 
+														 attribute.name=attribute, 
+														 attribute.type='numeric', 
+														 default.value='1'
+	)
+	displayGraph(window)
 	setNodeAttributesDirect(obj=cw, 
-													attribute.name='activity', 
+													attribute.name=attribute, 
 													attribute.type='numeric', 
 													node.names=model@react_id, 
 													values=rxnact
