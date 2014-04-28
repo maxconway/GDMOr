@@ -32,7 +32,7 @@ GDMO <- function(population, generations, startingpoint, evaluate, savefile = 'c
 #	)
 }
 
-GDMO_sybil <- function(model, population=10, generations=10, targets, targetdirections, savefile = 'checkpoint.RData'){
+GDMO_sybil <- function(model, population=10, generations=10, savefile = 'checkpoint.RData'){
 	
 	# Create starting point
 	start_genotype <- as.list(rep(TRUE, times = length(allGenes(model))))
@@ -62,12 +62,12 @@ GDMO_sybil <- function(model, population=10, generations=10, targets, targetdire
 			names(genotype)[genotype==FALSE]
 		}
 		# call sybil to compute the fluxes
-		solution <- optimizeProb(object = Ec_core, 
+		solution <- optimizeProb(object = model, 
 														 gene = genes,
 														 lb = 0,
 														 ub = 0,
 														 retOptSol = FALSE)
-		phenotype <- c(solution$fluxes[match(targets,react_id(Ec_core))]*-targetdirections, sum(genotype==FALSE))
+		phenotype <- c(solution$fluxes[model@obj!=0]*-sign(model@obj[model@obj!=0]), sum(genotype==FALSE))
 		
 		# memoize
 		memo[[digest(genotype)]] <<- phenotype
