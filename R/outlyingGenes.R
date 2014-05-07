@@ -30,11 +30,9 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 	}
 	
 	a.norm <- a[abs(a$correlation-mean(a$correlation,na.rm=T))<3*sd(a$correlation,na.rm=T),]
-	#   lines(density(rnorm(5000,mean(a.norm$correlation,na.rm=T),sd(a.norm$correlation,na.rm=T))),col='blue')
-	#   
-	#   ggplot(na.omit(a[abs(a$cor)>0,]))+aes(x=name,y=correlation)+geom_bar(stat='identity')+ylim(-1,+1) + theme(axis.text.x = element_blank())
-	#   ggplot(na.omit(a[abs(a$correlation)>2*sd(a.norm$correlation,na.rm=T),]))+aes(x=name,y=correlation)+geom_bar(stat='identity')+ylim(-1,+1) + theme(axis.text.x = element_text(angle = 90, hjust = 1))
-	#   
+	boundaries <- c(lower = lowerlimit*sd(a.norm$correlation,na.rm=T),
+									upper = upperlimit*sd(a.norm$correlation,na.rm=T)
+									)
 	
 	bothplots <- function(plot){
 		return(plot
@@ -46,7 +44,7 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 					 			 legend.position="none"
 					 			 
 					 )
-					 +geom_vline(xintercept=c(upperlimit*sd(a.norm$correlation,na.rm=T),lowerlimit*sd(a.norm$correlation,na.rm=T)),linetype='dotted')
+					 +geom_vline(xintercept=boundaries,linetype='dotted')
 		)
 	}
 	
@@ -61,8 +59,8 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 																+geom_point(aes(x=correlation,y=name, colour = subSystem))
 	)
 	
-	if(1<=nrow(a[a$correlation>(upperlimit*sd(a.norm$correlation,na.rm=T)) | a$correlation<(lowerlimit*sd(a.norm$correlation,na.rm=T)),])){
-		distributionplot <- distributionplot + geom_text(data = a[a$correlation>(upperlimit*sd(a.norm$correlation,na.rm=T)) | a$correlation<(lowerlimit*sd(a.norm$correlation,na.rm=T)),],
+	if(any(findInterval(a$correlation,boundaries)!=1)){
+		distributionPlot <- distributionPlot + geom_text(data = a[findInterval(a$correlation,boundaries)!=1,],
 																										 aes(x = correlation,
 																										 		size = 2.5,
 																										 		y = name,
@@ -93,11 +91,5 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 	print(densityPlot,vp=viewport(layout.pos.row=1,layout.pos.col=verticaldivide:5))
 	print(distributionPlot,vp=viewport(layout.pos.row=2:5,layout.pos.col=verticaldivide:5))
 	
-	return(na.omit(a[a$correlation>(upperlimit*sd(a.norm$correlation,na.rm=T)) | a$correlation<(lowerlimit*sd(a.norm$correlation,na.rm=T)),]))
+	return(na.omit(a[findInterval(a$correlation,boundaries)!=1,]))
 }
-
-# temp <- melt(dataset,id.vars=grep(pattern='genotype.*',colnames(dataset),value=T,invert=TRUE))
-# temp$gene <- str_replace_all(temp$variable, fixed('genotype.'), '')
-# temp$expression <- temp$value
-# temp$subSystem <- factor(genes_subsystems[match(temp$gene, genes_subsystems$genes), 'SubSystem'])
-# temp %.% group_by(pos, subSystem) %.% summarize(expression = mean(expression)) %.% ggplot(aes(x=pos, y=expression, colour=subSystem)) + geom_line()
