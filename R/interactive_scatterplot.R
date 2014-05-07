@@ -1,38 +1,72 @@
-#' @title Select a point from a scatterplot
-#'   
-#' @description Creates a scatter plot, and allows the user to select a point 
-#'   from it. Pushes the activation of reactions to a cytoscape window.
-#'   
-#' @param dataset a data frame
-#' @param x,y column names from the data frame to be plotted
-#' @param model a sybil model
+#' plot reaction activities in cytoscape
+#' 
+#' given a reaction activity vector, plot these to cytoscape
+#' 
+#' @param model a sybil model with valid \code{react_id}s
+#' @param activities a named vector of reaction activities, with names from  \code{model@react_ids}
 #' @param cw a cytoscape window
-#'   
-#' @return returns the activities of the reactions as a named vector, but mainly
-#'   used for the side effect of setting the 'activity' attribute in cytoscape.
+#' @param attribute the cytoscape attribute to be set
+#' 
+#' @return silently returns the activities of the reactions as a named vector, but mainly used for the side effect of setting the 'activity' attribute in cytoscape.
 #' 
 #' @export
-point_selector <- function(dataset, x, y, model, cw, attribute='activity'){
-	plot(x=dataset[[x]], y=dataset[[y]], xlab = x, ylab = y, cex=0.5)
-	ind <- identify(x=dataset[[x]], y=dataset[[y]], n=1, plot=FALSE)
-	
-	rxnact <- gene2rxn(model, dataset[ind,grep('^genotype\\.',x=colnames(dataset))])
-	names(rxnact) <- model@react_id
-	
-	#Cytoscape stuff
+show_reaction_activity <- function(model, activities, cw, attribute='activity'){
 	graph <- initNodeAttribute(graph=getGraph(cw), 
 														 attribute.name=attribute, 
 														 attribute.type='numeric', 
 														 default.value='1'
 	)
-	displayGraph(window)
+	displayGraph(cw)
 	setNodeAttributesDirect(obj=cw, 
 													attribute.name=attribute, 
 													attribute.type='numeric', 
 													node.names=model@react_id, 
-													values=rxnact
-													)
-	invisbile(rxnact)
+													values=rxnact[model@react_id]
+	)
+	invisible(rxnact)
+}
+
+#' Plot gene expressions in cytoscape
+#' 
+#' Given a gene expressions, plot the associated reaction activities to cytoscape.
+#' This function is a wrapper around \code{show_reaction_activities} and \code{gene2rxn}
+#' 
+#' @param model a sybil model with valid \code{react_id}s
+#' @param expressions a vector of gene expression values, length equal to \code{length(model@allGenes)}
+#' @param cw a cytoscape window
+#' @param attribute the cytoscape attribute to be set
+#' 
+#' @return silently returns the activities of the reactions as a named vector, but mainly used for the side effect of setting the 'activity' attribute in cytoscape.
+#' 
+#' @export
+show_gene_expression <- function(model, expressions, cw, attribute='activity'){
+	rxnact <- gene2rxn(model, expressions)
+	names(rxnact) <- model@react_id
+	
+	show_reaction_activity(model, rxnact, cw, attribute)
+}
+
+#' @title Select a point from a scatterplot
+#'   
+#' @description Creates a scatter plot, and allows the user to select a point 
+#'   from it. Returns the index of the point in the dataset. See examples for typical usage
+#'   
+#' @param dataset a data frame
+#' @param x,y column names from the data frame to be plotted
+#' @param model a sybil model
+#' @param cw a cytoscape window
+#' @param attribute the cytoscape attribute to be set
+#' 
+#' @export
+#' 
+#' @examples
+#' show_gene_expression(model, dataset[point_selector(dataset,'phenotype.one','phenotype.2', cw),grep('genotype',colnames(dataset))], cw)
+point_selector <- function(dataset, x, y, model, cw, attribute='activity'){
+	plot(x=dataset[[x]], y=dataset[[y]], xlab = x, ylab = y, cex=0.5)
+	ind <- identify(x=dataset[[x]], y=dataset[[y]], n=1, plot=FALSE)
+	
+	return(ind)
+	
 }
 
 #' @title Select a box from a scatterplot
