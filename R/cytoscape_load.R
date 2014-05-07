@@ -51,8 +51,8 @@ cytoscape_load <- function(model){
 	)
 	
 	graph <- initNodeAttribute(graph=graph, 
-														 attribute.name='activity', 
-														 attribute.type='numeric', 
+														 attribute.name='subsystem', 
+														 attribute.type='char', 
 														 default.value='1'
 	)
 	
@@ -60,6 +60,9 @@ cytoscape_load <- function(model){
 	nodeData(graph, model@react_id, 'type') <- 'reaction'
 	nodeData(graph, model@met_id, 'label') <- model@met_id
 	nodeData(graph, model@react_id, 'label') <- model@react_id
+	nodeData(graph, model@react_id, 'subsystem') <- aaply(model@subSys, 1, function(x){
+		colnames(model@subSys)[x][1]
+	})
 	
 	# show window
 	window <- new.CytoscapeWindow(title = model@mod_id,
