@@ -21,9 +21,9 @@ show_reaction_activity <- function(model, activities, cw, attribute='activity'){
 													attribute.name=attribute, 
 													attribute.type='numeric', 
 													node.names=model@react_id, 
-													values=rxnact[model@react_id]
+													values=activities[model@react_id]
 	)
-	invisible(rxnact)
+	invisible(activities)
 }
 
 #' Plot gene expressions in cytoscape
@@ -60,7 +60,7 @@ show_gene_expression <- function(model, expressions, cw, attribute='activity'){
 #' @export
 #' 
 #' @examples
-#' show_gene_expression(model, dataset[point_selector(dataset,'phenotype.one','phenotype.2', cw),grep('genotype',colnames(dataset))], cw)
+#' show_gene_expression(model, dataset[point_selector(dataset,'phenotype.one','phenotype.two', cw),grep('genotype',colnames(dataset))], cw)
 point_selector <- function(dataset, x, y, model, cw, attribute='activity'){
 	plot(x=dataset[[x]], y=dataset[[y]], xlab = x, ylab = y, cex=0.5)
 	ind <- identify(x=dataset[[x]], y=dataset[[y]], n=1, plot=FALSE)
