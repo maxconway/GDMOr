@@ -10,6 +10,7 @@
 #' 
 #' @export
 outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems){
+	genes_subsystems_present <- !missing(genes_subsystems)
 	
 	dataset$pos <- as.numeric(kpca(~.,
 																 dataset[,grep(pattern='phenotype.*',setdiff(colnames(dataset),'phenotype.kos'))], 
@@ -23,7 +24,7 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 	)
 	#   plot(density(na.omit(a$correlation)))
 	
-	if(missing(genes_subsystems)){
+	if(!genes_subsystems_present){
 		a$subSystem <- 'black'
 	}else{
 		a$subSystem <- factor(genes_subsystems[match(a$name, genes_subsystems$genes), 'SubSystem'])
@@ -32,7 +33,7 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 	a.norm <- a[abs(a$correlation-mean(a$correlation,na.rm=T))<3*sd(a$correlation,na.rm=T),]
 	boundaries <- c(lower = lowerlimit*sd(a.norm$correlation,na.rm=T),
 									upper = upperlimit*sd(a.norm$correlation,na.rm=T)
-									)
+	)
 	
 	bothplots <- function(plot){
 		return(plot
@@ -48,11 +49,12 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 		)
 	}
 	
-	densityPlot <- bothplots(ggplot(a,aes(correlation))
-													 +stat_density(aes(y=..count..))
-													 +scale_y_continuous(name="density")
+	densityPlot <- bothplots(ggplot(a, aes(x = correlation))
+													 +stat_density(alpha = 0, colour = 'black', size = 1)
+													 +scale_y_continuous(name = "density")
 													 +theme(axis.text.x = element_blank(),
-													 			 axis.title.x = element_blank())
+													 			 axis.title.x = element_blank()
+													 )
 	)
 	
 	distributionPlot <- bothplots(ggplot(a[abs(a$correlation)!=0,])
@@ -71,10 +73,10 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 		)
 	}
 	
-	if(!missing(genes_subsystems)){
+	if(genes_subsystems_present){
 		subsystemPlot <- a %.% 
 			group_by(subSystem) %.% 
-			summarise(correlation = mean(correlation)) %.% 
+			dplyr::summarise(correlation = mean(correlation)) %.% 
 			ggplot(aes(x=subSystem, y=correlation, fill = subSystem)) +
 			geom_bar(stat='identity') + scale_fill_discrete() +
 			coord_flip() + theme(legend.position="none", axis.text.y=element_text(angle=45, colour='gray30'))
@@ -82,8 +84,8 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 	
 	grid.newpage()
 	pushViewport(viewport(layout=grid.layout(5,5)))
-	if(!missing(genes_subsystems)){
-		print(subsystemPlot,vp=viewport(layout.pos.row=1:5, layout.pos.col=1:2))
+	if(genes_subsystems_present){
+		plot(subsystemPlot,vp=viewport(layout.pos.row=1:5, layout.pos.col=1:2))
 		verticaldivide <- 3
 	}else{
 		verticaldivide <- 1
