@@ -93,12 +93,12 @@ cytoscape_load <- function(model){
 									 mode='lookup'
 	)
 	
-	setEdgeOpacityRule(window,
-										 edge.attribute.name='stoich',
-										 control.points=c(0,1,5),
-										 opacities = c(0,127,255),
-										 mode = 'interpolate'
-	)
+# 	setEdgeOpacityRule(window,
+# 										 edge.attribute.name='stoich',
+# 										 control.points=c(0,1,5),
+# 										 opacities = c(0,127,255),
+# 										 mode = 'interpolate'
+# 	)
 	
 	window@graph <- graph
 	# 	displayGraph(window)
