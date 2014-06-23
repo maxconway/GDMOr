@@ -3,7 +3,7 @@
 #' given a reaction activity vector, plot these to cytoscape
 #' 
 #' @param model a sybil model with valid \code{react_id}s
-#' @param activities a named vector of reaction activities, with names from  \code{model@react_ids}
+#' @param activities a named vector of reaction activities, with names from \code{model@@react_ids}
 #' @param cw a cytoscape window
 #' @param attribute the cytoscape attribute to be set
 #' 
@@ -32,7 +32,7 @@ show_reaction_activity <- function(model, activities, cw, attribute='activity'){
 #' This function is a wrapper around \code{show_reaction_activities} and \code{gene2rxn}
 #' 
 #' @param model a sybil model with valid \code{react_id}s
-#' @param expressions a vector of gene expression values, length equal to \code{length(model@allGenes)}
+#' @param expressions a vector of gene expression values, length equal to \code{length(model@@allGenes)}
 #' @param cw a cytoscape window
 #' @param attribute the cytoscape attribute to be set
 #' 
