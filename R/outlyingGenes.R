@@ -79,7 +79,11 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 			dplyr::summarise(correlation = mean(correlation)) %.% 
 			ggplot(aes(x=subSystem, y=correlation, fill = subSystem)) +
 			geom_bar(stat='identity') + scale_fill_discrete() +
-			coord_flip() + theme(legend.position="none", axis.text.y=element_text(angle=45, colour='gray30'))
+			coord_flip() + theme(legend.position="none", 
+													 axis.text.y=element_text(angle=40, colour='gray30', size=rel(0.75)),
+													 axis.ticks.y = element_blank(),
+													 axis.title.y=element_blank()
+													 )
 	}
 	
 	grid.newpage()
