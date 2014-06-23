@@ -133,21 +133,24 @@ ggplot(correlations, aes(x=tolower(SubSystem), y=cor, colour=factor(species))) +
 ```
 
 And producing a pretty, stacked plot:
-```{r correlation_reaction_pathway}
+```{r correlation_reaction_pathway, dev='cairo_pdf'}
 a <- ggplot(correlations, aes(x=cor, colour=factor(species))) + 
 	geom_density() + 
+	scale_y_continuous(name='density', labels=NULL) +
 	theme_bw() +
 	theme(legend.position = "none", 
-				axis.title = element_blank(), 
-				axis.text = element_blank()
+				axis.title.x = element_blank(), 
+				axis.text.x = element_blank()
 				)
-b <- ggplot(correlations, aes(x=tolower(SubSystem), y=cor, colour=factor(species))) + 
+
+b <- correlations %>% filter(!is.na(cor)) %>%
+	ggplot(aes(x=tolower(SubSystem), y=cor, colour=factor(species))) + 
 	geom_boxplot() + 
+	scale_y_continuous('correlation') +
+	scale_x_discrete('subsystem') +
 	coord_flip() + 
 	theme_bw() +
-	theme(legend.position = "none", 
-				axis.title = element_blank()
-				)
+	theme(legend.position = "none")
 A <- ggplotGrob(a)
 B <- ggplotGrob(b)
 A$widths <- B$widths
