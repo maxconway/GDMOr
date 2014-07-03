@@ -3,18 +3,18 @@
 #' @description Takes a sybil model and a data frame or vector of gene activity, and
 #' finds active reactions from this.
 #' 
-#' @param genes a data frame or vector of gene activity
-#' @param model a sybil model
-#' @param env an environment in which to evaluate the gene-reaction mappings
-#' 
-#' 
-#' @return a vector of reaction presence of activity
-#'   
 #' @details Works by creating a new environment and evaluating gpr rules
 #' computationally. Could be a security concern, so check what you're choosing
-#' to run.
+#' to run. Is also quite slow, if general.
 #' 
-#' @import sybil
+#' @param genes a data frame or vector of gene activity. If a data frame, columns should be genes.
+#' @param model a sybil model.
+#' @param env an environment in which to evaluate the gene-reaction mappings.
+#' @param exprlist \code{model@@gprRules}, parsed to expressions. Mainly for internal use. 
+#' 
+#' @return a vector of reaction presence or activity
+#' 
+#' @import sybil plyr
 #' 
 #' @export
 #' @rdname gene2rxn
@@ -22,8 +22,6 @@ gene2rxn <- function(genes, model, env=new.env(emptyenv())){
 	UseMethod('gene2rxn')
 }
 
-#' @export
-#' @rdname gene2rxn
 gene2rxn.data.frame <- function(genes, model, env=new.env(emptyenv())){
 	exprlist <- llply(model@gprRules, function(rule){parse(text=rule)})
 	exprlist[model@gprRules==''] <- expression(1)
@@ -42,8 +40,6 @@ gene2rxn.data.frame <- function(genes, model, env=new.env(emptyenv())){
 	))
 }
 
-#' @export
-#' @rdname gene2rxn
 gene2rxn.numeric <- function(genes, model, env=new.env(emptyenv()), exprlist=NULL){
 	assign('&', function(x,y){min(x,y)}, env)
 	assign('|', function(x,y){max(x,y)}, env)
@@ -51,12 +47,10 @@ gene2rxn.numeric <- function(genes, model, env=new.env(emptyenv()), exprlist=NUL
 	gene2rxn.default(genes, model, env, exprlist)
 }
 
-#' @export
-#' @rdname gene2rxn
 gene2rxn.default <- function(genes, model, env=new.env(emptyenv()), exprlist=NULL){
 	# check arguments
 	if(length(genes) != length(model@allGenes)){
-		stop('requires a vector of gene presence. Try model@allGenes %in% genes')
+		stop('genes should have the same length as model@allGenes')
 	}
 	
 	env <- new.env(parent = baseenv())

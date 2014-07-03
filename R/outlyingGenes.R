@@ -1,12 +1,14 @@
-#' Produces a pair of graphs showing genes with unusually high correlations with position in the pareto front.
+#' Produces graphs showing genes with unusually high correlations with position in the pareto front.
 #' 
 #' @param dataset a dataframe with some columns prefixed by \code{genotype.},
 #'   and some by \code{phenotype.}
+#' @param lowerlimit lower bound to mark outlying genes, in standard deviations
+#' @param upperlimit upper bound to mark outlying genes, in standard deviations
+#' @param genes_subsystems a data.frame with columns \code{name} and \code{SubSystem}. If this is supplied, a further graph will be produced
 #' 
-#' @import ggplot2
-#' @import grid
-#' @import stringr
-#' @import kernlab
+#' @return names of outlying genes
+#' 
+#' @import ggplot2 grid stringr kernlab
 #' 
 #' @export
 outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems){
