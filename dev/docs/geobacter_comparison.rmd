@@ -19,7 +19,7 @@ library('kernlab')
 library('grid')
 library('gridExtra')
 library('compiler')
-library('GDMOr')
+library('metabex')
 ```
 ```{r, message=FALSE, warning=FALSE}
 source('~/Dropbox/cytoscape_paper/graphs.R')
