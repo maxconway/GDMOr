@@ -30,5 +30,5 @@ get_selected_rxns <- function(cw, model){
 #' @import RCytoscape sybil
 #' @export
 get_selected_genes <- function(cw, model){
-	genes <- unlist(model@genes[GetSelectedRxns(cw, model)]) %.% setdiff('') # Using %.% to create an ad-hoc infix operator 
+	genes <- unlist(model@genes[getSelectedRxns(cw, model)]) %.% setdiff('') # Using %.% to create an ad-hoc infix operator 
 }

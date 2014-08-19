@@ -14,7 +14,7 @@
 #' 
 #' @return a vector of reaction presence or activity
 #' 
-#' @import sybil plyr
+#' @import sybil plyr compiler
 #' 
 #' @export
 #' @rdname gene2rxn
