@@ -68,7 +68,7 @@ To assign these points to the graph, we can call
 show_gene_expression(model=geo_s_model, expressions=geo_s[index1,], cw=sulwin, attribute='activity1')
 show_gene_expression(model=geo_s_model, expressions=geo_s[index2,], cw=sulwin, attribute='activity2')
 ```
-You can then assign the attributes `'activity1'` and `'activity2'` to colours in cytoscape.
+We can then assign the attributes `'activity1'` and `'activity2'` to colours in cytoscape.
 However, more interesting is the activty difference. We can see this as follows:
 ```{r, eval=FALSE}
 show_gene_expression(
@@ -82,6 +82,9 @@ This creates a new attribute showing the activity difference.
 
 Pulling reactions from Cytoscape to R
 -------------------------------------
-
+In the *G. Sulfurreducens* metabolic network, there are three connected components: the large, main one, and two small ones of one and two reactions each. If we want to find out what they do, we can select them in Cytoscape and view their attributes. However, if we want to examine them in more detail, we can select them, then pull them back into R:
+```{r, eval=FALSE}
+rxns = get_selected_rxns(sulwin, geo_s_model)
+```
 
 
