@@ -1,0 +1,87 @@
+---
+output: html_document
+---
+Introduction
+============
+The metabex package is for Cytoscape-based analysis of populations of metabolic models, and their properties. This vignette introduces the package and provides some usage examples.
+
+Overview
+--------
+Package usage consits of:
+
+1. Initializing cytoscape, and the cytoscape connection.
+2. Loading a Sybil metabolic model.
+3. Loading a population dataset.
+4. Exploring.
+
+Initialization
+--------------
+First, open cytoscape, and install the CytoscapeRPC plugin, if necessary. Then connect to cytoscape:
+```{r, eval=FALSE}
+library(RCytoscape)
+CytoscapeConnection()
+```
+
+Loading a model
+---------------
+Two sybil models are included with the package (from [Sun et al, 2009](http://www.biomedcentral.com/1752-0509/3/15)):
+```{r}
+library(metabex)
+data('geo_m_model', 'geo_s_model', package='metabex')
+```
+Once these are loaded into R, we can push them to Cytoscape like so:
+```{r, eval=FALSE}
+sulwin <- cytoscape_load(geo_s_model)
+metwin <- cytoscape_load(geo_m_model)
+```
+You'll see a progress report as the models are loaded, but after this you might have to interact with cytoscape a little to force it to update and show the models.
+
+Loading a population
+--------------------
+At this stage, you can interact with Cytoscape to explore the models visually, but you if you want to visualize a population, now is the time to load the population data. Included in this package are two datasets, whos creation is described in the accompanying paper.
+```{r}
+data('geo_s', 'geo_m', package='metabex')
+```
+
+This point requires a bit more explanation. These population datasets are in the core format of this package: a `data.frame`, with some columns prefixed with `genotype.` and some with `phenotype.`. These mean exactly what one would expect: we have one `genotype.` column per gene, which can be boolean (i.e. presence) or numeric (i.e. expression level), and `phenotype.` columns represent properties of individuals (like biomass or synthetic objective levels).
+
+Exploration
+-----------
+Let's plot the *G. Sulfurreducens* pareto front:
+```{r}
+library(ggplot2)
+ggplot(geo_s, aes(phenotype.biomass, phenotype.fe2)) + geom_point()
+```
+
+There is a noticeable jump between synthesis rates of ~0.21 and ~0.24 for a small decrease in biomass production. We can investigate this further by comparing these points in cytoscape.
+
+Pushing individuals from R to Cytoscape
+---------------------------------------
+To see points from the pareto front on the graph, we first select the points from the graph. `point_selector` brings up a graph from which points can be clicked, to return their index.
+```{r, eval=FALSE}
+index1 <- point_selector(dataset=geo_s, x='phenotype.biomass', y='phenotype.fe2')
+index2 <- point_selector(dataset=geo_s, x='phenotype.biomass', y='phenotype.fe2')
+```
+
+To assign these points to the graph, we can call 
+```{r, eval=FALSE}
+show_gene_expression(model=geo_s_model, expressions=geo_s[index1,], cw=sulwin, attribute='activity1')
+show_gene_expression(model=geo_s_model, expressions=geo_s[index2,], cw=sulwin, attribute='activity2')
+```
+You can then assign the attributes `'activity1'` and `'activity2'` to colours in cytoscape.
+However, more interesting is the activty difference. We can see this as follows:
+```{r, eval=FALSE}
+show_gene_expression(
+	model=geo_s_model, 
+	expressions=(geo_s[index1,] - geo_s[index2,]), 
+	cw=sulwin, 
+	attribute='activityDiff'
+	)
+```
+This creates a new attribute showing the activity difference. 
+
+Pulling reactions from Cytoscape to R
+-------------------------------------
+
+
+
