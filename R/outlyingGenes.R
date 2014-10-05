@@ -59,21 +59,28 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 													 )
 	)
 	
-	distributionPlot <- bothplots(ggplot(a[abs(a$correlation)!=0,])
-																+geom_point(aes(x=correlation,y=name, colour = subSystem))
-	)
+	distributionPlot <- ggplot(a[abs(a$correlation)!=0,]) +
+		geom_boxplot(aes(x=subSystem, y=correlation, colour=subSystem, fill=subSystem)) +
+		ylim(-1,1) +
+		theme(
+			legend.position="none",
+			axis.ticks.y = element_blank(),
+			axis.text.y = element_blank()
+			) +
+		geom_hline(yintercept=boundaries,linetype='dotted') +
+		coord_flip()
 	
-	if(any(findInterval(a$correlation,boundaries)!=1)){
-		distributionPlot <- distributionPlot + geom_text(data = a[findInterval(a$correlation,boundaries)!=1,],
-																										 aes(x = correlation,
-																										 		size = 2.5,
-																										 		y = name,
-																										 		label = round(expression,3),
-																										 		hjust = 0.5+0.5*-sign(correlation)
-																										 ),
-																										 show_guide = FALSE
-		)
-	}
+	# 	if(any(findInterval(a$correlation,boundaries)!=1)){
+	# 		distributionPlot <- distributionPlot + geom_text(data = a[findInterval(a$correlation,boundaries)!=1,],
+	# 																										 aes(x = correlation,
+	# 																										 		size = 2.5,
+	# 																										 		y = name,
+	# 																										 		label = round(expression,3),
+	# 																										 		hjust = 0.5+0.5*-sign(correlation)
+	# 																										 ),
+	# 																										 show_guide = FALSE
+	# 		)
+	# 	}
 	
 	if(genes_subsystems_present){
 		subsystemPlot <- a %.% 
@@ -84,8 +91,8 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 			coord_flip() + theme(legend.position="none", 
 													 axis.text.y=element_text(angle=40, colour='gray30', size=rel(0.75)),
 													 axis.ticks.y = element_blank(),
-													 axis.title.y=element_blank()
-													 )
+													 axis.title.y = element_blank()
+			)
 	}
 	
 	grid.newpage()
