@@ -83,9 +83,9 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 	# 	}
 	
 	if(genes_subsystems_present){
-		subsystemPlot <- a %.% 
-			group_by(subSystem) %.% 
-			dplyr::summarise(correlation = mean(correlation)) %.% 
+		subsystemPlot <- a %>% 
+			group_by(subSystem) %>% 
+			dplyr::summarise(correlation = mean(correlation)) %>% 
 			ggplot(aes(x=subSystem, y=correlation, fill = subSystem)) +
 			geom_bar(stat='identity') + scale_fill_discrete() +
 			coord_flip() + theme(legend.position="none", 
