@@ -10,3 +10,4 @@ temp/*
 Matlab/*
 figures/*
 packrat/lib*/
+packrat/src/

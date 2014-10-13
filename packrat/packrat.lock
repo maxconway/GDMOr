@@ -1,0 +1,164 @@
+PackratFormat: 1.4
+PackratVersion: 0.4.1.1
+RVersion: 3.1.1
+Repos: CRAN=http://cran.rstudio.com,
+    BioCsoft=http://bioconductor.org/packages/2.13/bioc,
+    BioCann=http://bioconductor.org/packages/2.13/data/annotation,
+    BioCexp=http://bioconductor.org/packages/2.13/data/experiment,
+    BioCextra=http://bioconductor.org/packages/2.13/extra
+
+Package: BiocGenerics
+Source: Bioconductor
+Version: 0.8.0
+Hash: 32338a2da716fd80253bedd1234cfa81
+
+Package: bitops
+Source: CRAN
+Version: 1.0-6
+Hash: cb26464a8321628636b547518994c931
+
+Package: colorspace
+Source: CRAN
+Version: 1.2-4
+
+Package: dichromat
+Source: CRAN
+Version: 2.0-0
+
+Package: digest
+Source: CRAN
+Version: 0.6.4
+
+Package: evaluate
+Source: CRAN
+Version: 0.5.5
+Requires: stringr
+
+Package: formatR
+Source: CRAN
+Version: 1.0
+
+Package: ggplot2
+Source: CRAN
+Version: 1.0.0
+Requires: digest, gtable, proto, plyr, reshape2, scales
+
+Package: graph
+Source: Bioconductor
+Version: 1.40.1
+Hash: 7104703510895519ef992e373e83369d
+Requires: BiocGenerics
+
+Package: gtable
+Source: CRAN
+Version: 0.1.2
+
+Package: highr
+Source: CRAN
+Version: 0.3
+
+Package: kernlab
+Source: CRAN
+Version: 0.9-19
+
+Package: knitr
+Source: CRAN
+Version: 1.6
+Requires: digest, formatR, highr, stringr, markdown, evaluate
+
+Package: labeling
+Source: CRAN
+Version: 0.3
+
+Package: markdown
+Source: CRAN
+Version: 0.7.4
+Requires: mime
+
+Package: mime
+Source: CRAN
+Version: 0.2
+
+Package: munsell
+Source: CRAN
+Version: 0.4.2
+Requires: colorspace
+
+Package: packrat
+Source: CRAN
+Version: 0.4.1-1
+Hash: 5716097644904b9c1b4be2692de16005
+
+Package: plyr
+Source: CRAN
+Version: 1.8.1
+Requires: Rcpp
+
+Package: proto
+Source: CRAN
+Version: 0.3-10
+
+Package: RColorBrewer
+Source: CRAN
+Version: 1.0-5
+
+Package: Rcpp
+Source: CRAN
+Version: 0.11.3
+
+Package: RCurl
+Source: CRAN
+Version: 1.95-4.3
+Requires: bitops
+
+Package: RCytoscape
+Source: CRAN
+Version: 1.12.0
+Requires: BiocGenerics, graph, XMLRPC
+
+Package: reshape2
+Source: CRAN
+Version: 1.4
+Requires: Rcpp, stringr, plyr
+
+Package: R.matlab
+Source: CRAN
+Version: 3.0.1
+Requires: R.methodsS3, R.oo, R.utils
+
+Package: R.methodsS3
+Source: CRAN
+Version: 1.6.1
+
+Package: R.oo
+Source: CRAN
+Version: 1.18.0
+Requires: R.methodsS3
+
+Package: R.utils
+Source: CRAN
+Version: 1.33.0
+Requires: R.methodsS3, R.oo
+
+Package: scales
+Source: CRAN
+Version: 0.2.4
+Requires: dichromat, labeling, RColorBrewer, munsell, plyr
+
+Package: stringr
+Source: CRAN
+Version: 0.6.2
+
+Package: sybil
+Source: CRAN
+Version: 1.2.6
+
+Package: XML
+Source: CRAN
+Version: 3.98-1.1
+Hash: 13746d37588e7083349177d6e8234864
+
+Package: XMLRPC
+Source: CRAN
+Version: 0.3-0
+Requires: XML, RCurl
