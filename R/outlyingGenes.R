@@ -8,7 +8,7 @@
 #' 
 #' @return names of outlying genes
 #' 
-#' @import ggplot2 grid stringr kernlab
+#' @import ggplot2 grid stringr kernlab dplyr
 #' 
 #' @export
 outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems){
