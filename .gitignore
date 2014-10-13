@@ -5,4 +5,8 @@
 man/
 *.html
 NAMESPACE
+raw/*
 temp/*
+Matlab/*
+figures/*
+packrat/lib*/
