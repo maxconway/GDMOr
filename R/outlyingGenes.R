@@ -87,6 +87,7 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 			group_by(subSystem) %>% 
 			dplyr::summarise(`mean expression` = mean(expression)) %>% 
 			ggplot(aes(x=subSystem, y=`mean expression`, fill = subSystem)) +
+			geom_hline(yintercept = 1, colour='dimgrey') +
 			geom_bar(stat='identity') + scale_fill_discrete() +
 			coord_flip() + theme(legend.position="none", 
 													 axis.text.y=element_text(angle=40, colour='gray30', size=rel(0.75)),
