@@ -40,12 +40,12 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 	bothplots <- function(plot){
 		return(plot
 					 +xlim(-1,1)
+					 +theme_bw()
 					 +theme(panel.grid.major.y = element_blank(),
 					 			 panel.grid.minor.y = element_blank(),
 					 			 axis.ticks.y = element_blank(),
 					 			 axis.text.y = element_blank(),
 					 			 legend.position="none"
-					 			 
 					 )
 					 +geom_vline(xintercept=boundaries,linetype='dotted')
 		)
@@ -62,6 +62,7 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 	distributionPlot <- ggplot(a[abs(a$correlation)!=0,]) +
 		geom_boxplot(aes(x=subSystem, y=correlation, colour=subSystem, fill=subSystem)) +
 		ylim(-1,1) +
+		theme_bw() +
 		theme(
 			legend.position="none",
 			axis.ticks.y = element_blank(),
@@ -89,7 +90,9 @@ outlyingGenes <- function(dataset, lowerlimit=-2, upperlimit=2, genes_subsystems
 			ggplot(aes(x=subSystem, y=`mean expression`, fill = subSystem)) +
 			geom_hline(yintercept = 1, colour='dimgrey') +
 			geom_bar(stat='identity') + scale_fill_discrete() +
-			coord_flip() + theme(legend.position="none", 
+			coord_flip() + 
+			theme_bw() +
+			theme(legend.position="none", 
 													 axis.text.y=element_text(angle=40, colour='gray30', size=rel(0.75)),
 													 axis.ticks.y = element_blank(),
 													 axis.title.y = element_blank()
