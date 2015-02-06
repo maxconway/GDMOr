@@ -7,3 +7,7 @@
 ^\.Rhistory$
 ^\.Rbuildignore$
 ^\.gitignore$
+^README\.Rmd$
+^README-.*\.png$
+README.R
+README.md

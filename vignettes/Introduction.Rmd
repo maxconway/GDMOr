@@ -1,12 +1,16 @@
 ---
 title: "Introduction"
-output: html_document
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 The metabex package is for Cytoscape-based analysis of populations of metabolic models, and their properties. This vignette introduces the package and provides some usage examples.
 
 Overview
 --------
-Package usage consits of:
+Package usage consists of:
 
 1. Initializing cytoscape, and the cytoscape connection.
 2. Loading a Sybil metabolic model.
@@ -25,7 +29,7 @@ Loading a model
 ---------------
 Two sybil models are included with the package (from [Sun et al, 2009](http://www.biomedcentral.com/1752-0509/3/15)):
 ```{r}
-library(metabex)
+library(metabex, warn.conflicts=FALSE)
 data('geo_m_model', 'geo_s_model', package='metabex')
 ```
 Once these are loaded into R, we can push them to Cytoscape like so:
