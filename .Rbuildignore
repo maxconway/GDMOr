@@ -1,5 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^\dev/.*
+^dev/(^|.*)
 ^\.git/.*
 ^packrat/
+^\.Rprofile$
+^\.Rhistory$
+^\.Rbuildignore$
+^\.gitignore$
