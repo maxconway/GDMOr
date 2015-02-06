@@ -8,8 +8,7 @@ Description: This package is for Cytoscape-based analysis of populations of
     can be displayed in cytoscape and subsets of the metabolic network
     visualized.
 Version: 0.1
-Author: Max Conway <conway.max1@gmail.com>
-Maintainer: Max Conway <conway.max1@gmail.com>
+Authors@R: person('Max', 'Conway', email='max.conway@cl.cam.ac.uk', role = c("aut", "cre"))
 Depends:
     R (>= 3.0.2)
 Imports:

@@ -1,8 +1,7 @@
 ---
+title: "Introduction"
 output: html_document
 ---
-Introduction
-============
 The metabex package is for Cytoscape-based analysis of populations of metabolic models, and their properties. This vignette introduces the package and provides some usage examples.
 
 Overview
