@@ -1,7 +1,7 @@
 Package: metabex
 Title: Metabolic Model Explorer
-Version: 0.1
 Description: Metabolic Network Exploration
+Version: 0.2
 Authors@R: person('Max', 'Conway', email='max.conway@cl.cam.ac.uk', role = c("aut", "cre"))
 Depends:
     R (>= 3.0.2)
