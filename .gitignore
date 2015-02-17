@@ -2,7 +2,6 @@
 .Rhistory
 .RData
 *~
-man/
 *.html
 raw/*
 temp/*
