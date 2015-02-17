@@ -1,6 +1,7 @@
 #' Loads a metabolic model into cytoscape, and sets up visual mappings
 #' 
 #' @import RCytoscape
+#' @import graph
 #' @export
 cytoscape_load <- function(model){
 	# make adjacency matrix
