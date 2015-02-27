@@ -22,6 +22,9 @@ gene2rxn <- function(genes, model, env=new.env(emptyenv())){
 	UseMethod('gene2rxn')
 }
 
+#' @import sybil plyr compiler
+#' @export
+#' @rdname gene2rxn
 gene2rxn.data.frame <- function(genes, model, env=new.env(emptyenv())){
 	exprlist <- llply(model@gprRules, function(rule){parse(text=rule)})
 	exprlist[model@gprRules==''] <- expression(1)
@@ -45,6 +48,9 @@ gene2rxn.data.frame <- function(genes, model, env=new.env(emptyenv())){
 	))
 }
 
+#' @import sybil plyr compiler
+#' @export
+#' @rdname gene2rxn
 gene2rxn.numeric <- function(genes, model, env=new.env(emptyenv()), exprlist=NULL){
 	assign('&', function(x,y){min(x,y)}, env)
 	assign('|', function(x,y){max(x,y)}, env)

@@ -2,9 +2,16 @@
 % Please edit documentation in R/gene2rxn.R
 \name{gene2rxn}
 \alias{gene2rxn}
+\alias{gene2rxn.data.frame}
+\alias{gene2rxn.numeric}
 \title{gene to reaction lookup}
 \usage{
 gene2rxn(genes, model, env = new.env(emptyenv()))
+
+\method{gene2rxn}{data.frame}(genes, model, env = new.env(emptyenv()))
+
+\method{gene2rxn}{numeric}(genes, model, env = new.env(emptyenv()),
+  exprlist = NULL)
 }
 \arguments{
 \item{genes}{a data frame or vector of gene activity. If a data frame, columns should be genes.}
