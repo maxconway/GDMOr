@@ -1,24 +1,22 @@
-library(igraph)
-graph <- getGraph(sulwin)
-adjmat <- (as(graph, 'matrix')>0)
-net <- network(adjmat, directed = TRUE, bipartite = 609)
-res <- set.vertex.attribute(net, 'type', 'metab', match(geo_s_model@met_id, network.vertex.names(net)))
-res <- set.vertex.attribute(net, 'type', 'rxn', match(geo_s_model@react_id, network.vertex.names(net)))
-activities <- llply(graph@nodes, function(x){getNodeAttribute(sulwin,x,'activity1')})
-res <- set.vertex.attribute(net, 'activity1', activities, match(graph@nodes, network.vertex.names(net)))
-res <- set.vertex.attribute(net, 'subsystem', geo_s_rxns$SubSystem, match(geo_s_rxns$Abbreviation, network.vertex.names(net)))
-
-measures <- data.frame(
-	betweenness = betweenness(ig),
-	closeness_out = closeness(ig, mode='out'),
-	closeness_in = closeness(ig, mode='in'),
-	closeness_all = closeness(ig, mode='all'),
-	closeness_total = closeness(ig, mode='total'),
-	degree_out = degree(ig, mode='out'),
-	degree_in = degree(ig, mode='in'),
-	degree_all = degree(ig, mode='all'),
-	degree_total = degree(ig, mode='total')
-)
+# library(igraph)
+# graph <- getGraph(sulwin)
+# adjmat <- (as(graph, 'matrix')>0)
+# net <- network(adjmat, directed = TRUE, bipartite = 609)
+# res <- set.vertex.attribute(net, 'type', 'metab', match(geo_s_model@met_id, network.vertex.names(net)))
+# res <- set.vertex.attribute(net, 'type', 'rxn', match(geo_s_model@react_id, network.vertex.names(net)))
+# activities <- llply(graph@nodes, function(x){getNodeAttribute(sulwin,x,'activity1')})
+# res <- set.vertex.attribute(net, 'activity1', activities, match(graph@nodes, network.vertex.names(net)))
+# res <- set.vertex.attribute(net, 'subsystem', geo_s_rxns$SubSystem, match(geo_s_rxns$Abbreviation, network.vertex.names(net)))
+#
+# measures <- data.frame(
+# 	betweenness = betweenness(ig),
+# 	closeness_out = closeness(ig, mode='out'),
+# 	closeness_in = closeness(ig, mode='in'),
+# 	closeness_all = closeness(ig, mode='all'),
+# 	degree_out = degree(ig, mode='out'),
+# 	degree_in = degree(ig, mode='in'),
+# 	degree_all = degree(ig, mode='all')
+# )
 
 model2igraph <- function(model){
 	adjmat <- as.matrix(model@S)
@@ -43,11 +41,9 @@ netstat <- function(ig){
 		closeness_out = closeness(ig, mode='out'),
 		closeness_in = closeness(ig, mode='in'),
 		closeness_all = closeness(ig, mode='all'),
-		closeness_total = closeness(ig, mode='total'),
 		degree_out = degree(ig, mode='out'),
 		degree_in = degree(ig, mode='in'),
-		degree_all = degree(ig, mode='all'),
-		degree_total = degree(ig, mode='total')
+		degree_all = degree(ig, mode='all')
 	)
 	return(measures)
 }
@@ -68,7 +64,7 @@ rbind(
 # 	group_by(species, SubSystem) %>%
 # 	summarize(
 # 		betweenness = mean(betweenness),
-# 		closeness_in = mean(closeness_in), 
+# 		closeness_in = mean(closeness_in),
 # 		closeness_out = mean(closeness_out),
 # 		closeness_all = mean(closeness_all)
 # 		) %>%
