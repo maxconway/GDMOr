@@ -12,7 +12,8 @@ Various graphs can be plotted to identify genes or reactions with unusual proper
 
 metabex is not yet available on CRAN. You can install the development version directly from github with:
 
-```{R , eval=FALSE}
+
+```r
 if (packageVersion("devtools") < 1.6) {
   install.packages("devtools")
 }
@@ -21,4 +22,4 @@ devtools::install_github("maxconway/metabex")
 
 ## Usage
 
-For usage, see `{R , eval=FALSE} vignette('Introduction', package='metabex')`
+For usage, see `vignette('Introduction', package='metabex')`
